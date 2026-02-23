@@ -1,4 +1,6 @@
 import "reflect-metadata";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 import express from "express";
 import { DataSource } from "typeorm";
 import { Repository } from "./entity/Repository";
@@ -20,7 +22,7 @@ async function main() {
 
   app.get("/", async (_req, res) => {
     const repos = await repoRepository.find({ order: { id: "DESC" } });
-    const html = "<!DOCTYPE html>" + HomePage({ repos });
+    const html = "<!DOCTYPE html>" + ReactDOMServer.renderToStaticMarkup(<HomePage repos={repos} />);
     res.type("html").send(html);
   });
 

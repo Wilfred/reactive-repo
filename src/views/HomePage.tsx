@@ -1,8 +1,8 @@
-import { h } from "../jsx";
+import React from "react";
 import { Layout } from "./Layout";
 import { Repository } from "../entity/Repository";
 
-export function HomePage(props: { repos: Repository[] }): string {
+export function HomePage(props: { repos: Repository[] }) {
   return (
     <Layout title="GitHub Repo Tracker">
       <h1>GitHub Repository Tracker</h1>
@@ -17,12 +17,12 @@ export function HomePage(props: { repos: Repository[] }): string {
           Repository
           <input type="text" name="name" placeholder="e.g. react" required />
         </label>
-        <button type="submit" class="btn-add">Add</button>
+        <button type="submit" className="btn-add">Add</button>
       </form>
 
       <h2>Tracked Repositories</h2>
       {props.repos.length === 0 ? (
-        <div class="empty">No repositories tracked yet. Add one above!</div>
+        <div className="empty">No repositories tracked yet. Add one above!</div>
       ) : (
         <table>
           <thead>
@@ -35,7 +35,7 @@ export function HomePage(props: { repos: Repository[] }): string {
           </thead>
           <tbody>
             {props.repos.map((repo) => (
-              <tr>
+              <tr key={repo.id}>
                 <td>{repo.owner}</td>
                 <td>{repo.name}</td>
                 <td>
@@ -48,8 +48,8 @@ export function HomePage(props: { repos: Repository[] }): string {
                   </a>
                 </td>
                 <td>
-                  <form method="POST" action={`/repos/${repo.id}/delete`} style="display:inline">
-                    <button type="submit" class="btn-delete">Remove</button>
+                  <form method="POST" action={`/repos/${repo.id}/delete`} style={{ display: "inline" }}>
+                    <button type="submit" className="btn-delete">Remove</button>
                   </form>
                 </td>
               </tr>

@@ -1,11 +1,10 @@
-import { h } from "../jsx";
+import React from "react";
 
-export function Layout(props: { title: string; children?: unknown }): string {
-  const children = props.children as string;
+export function Layout(props: { title: string; children?: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{props.title}</title>
         <style>{`
@@ -47,7 +46,7 @@ export function Layout(props: { title: string; children?: unknown }): string {
         `}</style>
       </head>
       <body>
-        {children}
+        {props.children}
       </body>
     </html>
   );
