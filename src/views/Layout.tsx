@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Layout(props: { title: string; children?: React.ReactNode }) {
+export function Layout(props: { title: string; children?: React.ReactNode }): React.ReactElement {
   return (
     <html lang="en">
       <head>

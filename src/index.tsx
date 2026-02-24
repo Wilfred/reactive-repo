@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import express from "express";
+import express, { Request, Response } from "express";
 import { DataSource } from "typeorm";
 import { Repository } from "./entity/Repository";
 import { HomePage } from "./views/HomePage";
@@ -13,20 +13,20 @@ const AppDataSource = new DataSource({
   entities: [Repository],
 });
 
-async function main() {
+async function main(): Promise<void> {
   await AppDataSource.initialize();
   const repoRepository = AppDataSource.getRepository(Repository);
 
   const app = express();
   app.use(express.urlencoded({ extended: true }));
 
-  app.get("/", async (_req, res) => {
+  app.get("/", async (_req: Request, res: Response) => {
     const repos = await repoRepository.find({ order: { id: "DESC" } });
     const html = "<!DOCTYPE html>" + ReactDOMServer.renderToStaticMarkup(<HomePage repos={repos} />);
     res.type("html").send(html);
   });
 
-  app.post("/repos", async (req, res) => {
+  app.post("/repos", async (req: Request, res: Response) => {
     const { owner, name } = req.body as { owner: string; name: string };
     if (owner && name) {
       const repo = repoRepository.create({
@@ -38,8 +38,8 @@ async function main() {
     res.redirect("/");
   });
 
-  app.post("/repos/:id/delete", async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+  app.post("/repos/:id/delete", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id as string, 10);
     if (!isNaN(id)) {
       await repoRepository.delete(id);
     }
@@ -52,7 +52,7 @@ async function main() {
   });
 }
 
-main().catch((err) => {
+main().catch((err: unknown) => {
   console.error("Failed to start:", err);
   process.exit(1);
 });

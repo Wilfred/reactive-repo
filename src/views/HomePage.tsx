@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "./Layout";
 import { Repository } from "../entity/Repository";
 
-export function HomePage(props: { repos: Repository[] }) {
+export function HomePage(props: { repos: Repository[] }): React.ReactElement {
   return (
     <Layout title="GitHub Repo Tracker">
       <h1>GitHub Repository Tracker</h1>
@@ -34,7 +34,7 @@ export function HomePage(props: { repos: Repository[] }) {
             </tr>
           </thead>
           <tbody>
-            {props.repos.map((repo) => (
+            {props.repos.map((repo: Repository) => (
               <tr key={repo.id}>
                 <td>{repo.owner}</td>
                 <td>{repo.name}</td>
