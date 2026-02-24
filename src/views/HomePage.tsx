@@ -4,21 +4,26 @@ import { Repository } from "../entity/Repository";
 
 export function HomePage(props: { repos: Repository[] }): React.ReactElement {
   return (
-    <Layout title="GitHub Repo Tracker">
-      <h1>GitHub Repository Tracker</h1>
+    <Layout title="Reactive Repo">
+      <h1>Reactive Repo</h1>
+      <p className="subtitle">
+        If this, then that — for your GitHub repositories.
+      </p>
 
-      <h2>Add a Repository</h2>
-      <form method="POST" action="/repos">
-        <label>
-          Owner
-          <input type="text" name="owner" placeholder="e.g. facebook" required />
-        </label>
-        <label>
-          Repository
-          <input type="text" name="name" placeholder="e.g. react" required />
-        </label>
-        <button type="submit" className="btn-add">Add</button>
-      </form>
+      <div className="card">
+        <h2>Add a Repository</h2>
+        <form method="POST" action="/repos">
+          <label>
+            Owner
+            <input type="text" name="owner" placeholder="e.g. facebook" required />
+          </label>
+          <label>
+            Repository
+            <input type="text" name="name" placeholder="e.g. react" required />
+          </label>
+          <button type="submit" className="btn-add">Add</button>
+        </form>
+      </div>
 
       <h2>Tracked Repositories</h2>
       {props.repos.length === 0 ? (
@@ -30,6 +35,7 @@ export function HomePage(props: { repos: Repository[] }): React.ReactElement {
               <th>Owner</th>
               <th>Repository</th>
               <th>Link</th>
+              <th>Rules</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -45,6 +51,11 @@ export function HomePage(props: { repos: Repository[] }): React.ReactElement {
                     rel="noopener noreferrer"
                   >
                     {repo.owner}/{repo.name}
+                  </a>
+                </td>
+                <td>
+                  <a href={`/repos/${repo.id}/rules`} className="btn-rules">
+                    Manage Rules
                   </a>
                 </td>
                 <td>
