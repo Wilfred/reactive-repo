@@ -39,7 +39,7 @@ async function main(): Promise<void> {
   });
 
   app.post("/repos/:id/delete", async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (!isNaN(id)) {
       await repoRepository.delete(id);
     }
